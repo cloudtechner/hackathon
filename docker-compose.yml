@@ -1,0 +1,22 @@
+version: '3'
+ 
+services:
+  # MongoDB service
+  mongo:
+    image: mongo
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+ 
+  # Node.js app service
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: node-express-mongodb-server
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongo
+    environment:
+      - MONGODB_URI=mongodb://mongo:27017/node-express-mongodb
